@@ -1,10 +1,11 @@
 package ciphersij
 
+import java.lang.Math._
+
 object Caesar {
 
-  private val alphabetMap = ('A' to 'Z')
+  val alphabetMap = ('A' to 'Z')
     .zipWithIndex
-    .map { case (letter, index) => (letter, index + 1) }
     .toMap
 
   def encrypt(plainText: String, number: Int, direction: String="right"): String = {
@@ -16,7 +17,7 @@ object Caesar {
     }
 
     plainText
-      .toSeq
+    .toSeq
       .map(character => shift(character, number, dir))
       .mkString("")
   }
@@ -24,19 +25,10 @@ object Caesar {
   private def shift(character: Char, number: Int, direction: Int): Char = {
     if (character.isLetter) {
       val letterIndex = alphabetMap(character)
-      val newIndex = slide(letterIndex + number * direction, number)
+      val newIndex = floorMod(letterIndex + number * direction, 26)
       alphabetMap.find({ case (_, index) => index == newIndex}).get._1
     } else {
       character
     }
-  }
-
-  private def slide(newIndex: Int, number: Int): Int = {
-    if (newIndex > 26)
-      newIndex - 26
-    else if (newIndex < 1)
-      newIndex + 26
-    else
-      newIndex
   }
 }

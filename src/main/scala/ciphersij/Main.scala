@@ -4,8 +4,11 @@ object Main {
 
   def main(args: Array[String]): Unit = {
     val plaintext = TxtReader.readFile("text.txt")
-    val encrypted = Caesar.encrypt(plaintext, 0, "left")
-    println(plaintext)
-    println(encrypted)
+    val ciphertext = Caesar.encrypt(plaintext, 13, "left")
+    val decrypted = FrequencyAnalysis.decrypt(ciphertext)
+
+    println(s"Plaintext:\n$plaintext\n")
+    println(s"Ciphertext:\n$ciphertext\n")
+    println(s"Decipher Attempt:\n$decrypted\n")
   }
 }
