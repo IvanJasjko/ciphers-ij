@@ -1,0 +1,14 @@
+Howdy! A few people have mentioned that they’d like to do some little exercises to sharpen up their coding skills a little, so I thought I’d try to kick something off.
+My current thinking is:
+Post a problem every two weeks
+Everyone hacks away either on their own or with others if they wanna
+We get together at the end of the two weeks and see where we got to
+Repeat until bored!
+This is totally going to be driven by all of us, so let’s tweak it as we go along, but that feels like a reasonable way to get started. Sound okay?
+Other vague thoughts:
+Use whatever language you fancy -- these are good practice for picking up new languages or for practising your current language of choice
+Have a mix of problems -- different difficulties, different types of problems, let’s mix it up a bit
+Feel free to start and not finish -- even if you don’t get to the end, just starting and half completing stuff is a good exercise
+All levels welcome. This is about learning new stuff and experimenting, so let’s leave our impostor syndrome at the door and have a go.
+Sound okay?
+With that in mind, here’s what I thought we might have a hack at this week. It’s a bit of an odd one, but I like that there are multiple stages in it so everyone can have a go and see how far they get.
