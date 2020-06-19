@@ -24,10 +24,9 @@ object FrequencyAnalysis {
       }
     }.toMap
 
-    val candidates = attempts.filter({ case(_, value) => value != -1 })
+    val candidates = attempts.filter({ case (_, value) => value != -1 })
     candidates.minBy(_._2)._1
   }
-
 
   private def getFreqs(text: String): Map[Char, Float] = {
     text.replaceAll("""[0-9]| """, "").distinct

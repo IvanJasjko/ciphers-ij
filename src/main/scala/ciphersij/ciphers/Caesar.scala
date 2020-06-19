@@ -8,7 +8,7 @@ object Caesar extends Cipher {
 
   def encrypt(plainText: String, number: Int): String = {
     plainText
-    .toSeq
+      .toSeq
       .map(character => shift(character, number))
       .mkString("")
   }
@@ -21,7 +21,7 @@ object Caesar extends Cipher {
     if (character.isLetter) {
       val letterIndex = alphabetMap(character)
       val newIndex = floorMod(letterIndex + number, 26)
-      alphabetMap.find({ case (_, index) => index == newIndex}).get._1
+      alphabetMap.find({ case (_, index) => index == newIndex }).get._1
     } else {
       character
     }
