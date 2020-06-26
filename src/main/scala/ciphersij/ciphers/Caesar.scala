@@ -2,22 +2,20 @@ package ciphersij.ciphers
 
 import java.lang.Math.floorMod
 
-import ciphersij.utils.Utils.alphabetMap
+object Caesar extends Cipher[CaesarKey] {
 
-object Caesar extends Cipher {
-
-  def encrypt(plainText: String, number: Int): String = {
+  def encrypt(plainText: String, key: CaesarKey): String = {
     plainText
       .toSeq
-      .map(character => shift(character, number))
+      .map(character => shift(character, key.value))
       .mkString("")
   }
 
-  def decrypt(cipherText: String, key: Int): String = {
-    encrypt(cipherText, -key)
+  def decrypt(cipherText: String, key: CaesarKey): String = {
+    encrypt(cipherText, CaesarKey(-key.value))
   }
 
-  private def shift(character: Char, number: Int): Char = {
+  def shift(character: Char, number: Int): Char = {
     if (character.isLetter) {
       val letterIndex = alphabetMap(character)
       val newIndex = floorMod(letterIndex + number, 26)

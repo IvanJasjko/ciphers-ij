@@ -1,7 +1,8 @@
 package ciphersij.breakers
 
 import ciphersij.ciphers.Caesar._
-import ciphersij.utils.Utils._
+import ciphersij.ciphers.{CaesarKey, Key}
+import ciphersij.utils.TextParser._
 
 object FrequencyAnalysis {
 
@@ -10,7 +11,7 @@ object FrequencyAnalysis {
     val expectedFreqs = sampleFreqs map { case (key, freq) => (key, freq / sampleFreqs.values.sum) }
 
     val attempts = (0 to 25).map { key =>
-      val attemptText = decrypt(cipherText, key)
+      val attemptText = decrypt(cipherText, CaesarKey(key))
       val attemptFreqs = getFreqs(attemptText)
       val diff = attemptFreqs.keys.toList diff expectedFreqs.keys.toList
 
