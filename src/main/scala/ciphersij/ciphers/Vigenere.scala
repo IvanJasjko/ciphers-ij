@@ -1,45 +1,58 @@
 package ciphersij.ciphers
 
+
 import scala.annotation.tailrec
 
 object Vigenere extends Cipher[VigenereKey] {
 
   def encrypt(plaintext: String, key: VigenereKey): String = {
-    val slices = Range(0, plaintext.length, key.value.length).sliding(2).toList
-    val remainder = slices.last.last
-    val textChunks = slices.map({ case Vector(x, y) => plaintext.slice(x, y) }) ++ List(plaintext.splitAt(remainder)._2)
-
-    val cleanChunks = updateCycle(textChunks)
-
-    cleanChunks.foreach(println)
-    "wip"
-
+    vigenereEncrypt(plaintext, key)
   }
 
   def decrypt(ciphertext: String, key: VigenereKey): String = {
-    "wip"
+    vigenereEncrypt(ciphertext, key, reverse = true)
+  }
+
+  def vigenereEncrypt(plaintext: String, key: VigenereKey, reverse: Boolean = false): String = {
+    val keySize = key.value.length
+    val chunks = splitText(plaintext, keySize)
+    val keyList = key.value.map(letter => alphabetMap(letter.toUpper))
+    chunks.map(chunk => applyKeys(chunk, keyList, reverse)).mkString("")
   }
 
   @tailrec
-  private def takeNextLetter(headList: String, tailList: String): (String, String) = {
-    val updatedHead = headList.concat(tailList.head.toString)
-    val updatedTail = tailList.tail
-
-    if (tailList.head != ' ' && headList.replace(" ", "").length == 3)
-      (updatedHead, updatedTail)
-    else
-      takeNextLetter(updatedHead, updatedTail)
-  }
-
-  @tailrec
-  private def updateCycle(chunks: List[String], index: Int=0): List[String] = {
-    val slice = chunks.splitAt(index)._2
-    println(slice)
-    if (slice.isEmpty) {
-      chunks
+  private def applyKeys(chunk: String, keys: Seq[Int], reverse: Boolean, encodedChunk: String = ""): String = {
+    val direction = if (reverse) -1 else 1
+    if (chunk.isEmpty) {
+      encodedChunk
+    } else if (chunk.head == ' ') {
+      applyKeys(chunk.tail, keys,  reverse, encodedChunk ++ chunk.head.toString)
     } else {
-      val newPair = takeNextLetter(chunks.head, chunks.tail.head)
-      updateCycle(List(newPair._1, newPair._2) ++ slice, index+2)
+      applyKeys(chunk.tail, keys.tail, reverse, encodedChunk ++ Caesar.shift(chunk.head, keys.head * direction).toString)
     }
+  }
+
+  @tailrec
+  private def splitText(plaintext: String, keySize: Int, index: Int = 0, chunks: List[String] = List()): List[String] = {
+    val newIndex = getChunkIndex(plaintext, keySize)
+    val (textHead, textTail) = plaintext.splitAt(newIndex)
+    val output = chunks ++ List(textHead)
+    if (getLetterCount(textTail) < keySize)
+      output ++ List(textTail)
+    else
+      splitText(textTail, keySize, newIndex, output)
+  }
+
+  @tailrec
+  private def getChunkIndex(text: String, keySize: Int, index: Int = 0): Int = {
+    val chunk = text.take(index)
+    if (getLetterCount(chunk) == keySize)
+      index
+    else
+      getChunkIndex(text, keySize, index + 1)
+  }
+
+  private def getLetterCount(text: String): Int = {
+    text.replace(" ", "").length
   }
 }
