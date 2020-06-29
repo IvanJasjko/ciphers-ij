@@ -1,6 +1,5 @@
 package ciphersij.ciphers
 
-
 import scala.annotation.tailrec
 
 object Vigenere extends Cipher[VigenereKey] {
@@ -26,7 +25,7 @@ object Vigenere extends Cipher[VigenereKey] {
     if (chunk.isEmpty) {
       encodedChunk
     } else if (chunk.head == ' ') {
-      applyKeys(chunk.tail, keys,  reverse, encodedChunk ++ chunk.head.toString)
+      applyKeys(chunk.tail, keys, reverse, encodedChunk ++ chunk.head.toString)
     } else {
       applyKeys(chunk.tail, keys.tail, reverse, encodedChunk ++ Caesar.shift(chunk.head, keys.head * direction).toString)
     }
